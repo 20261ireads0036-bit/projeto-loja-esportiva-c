@@ -3,7 +3,7 @@
 int main()
 {
 
-    printf("GG pros inimigoawfawf");
+    printf("aaaaaaaaaaaaaaaaaaaaaaaa");
 
     return 0;
 }
