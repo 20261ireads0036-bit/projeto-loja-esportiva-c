@@ -3,7 +3,7 @@
 int main()
 {
 
-    printf("Desgraca");
+    printf("GG pros inimigo");
 
     return 0;
 }
