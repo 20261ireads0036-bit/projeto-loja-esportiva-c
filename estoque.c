@@ -27,32 +27,30 @@ int adicionarAoVetor(ProdutoEsportivo **produtos, int *quantidade, ProdutoEsport
 
 void listarTodos(ProdutoEsportivo produtos[], int quantidade)
 {
-
     printf("\n");
-    printf("========================================\n");
-    printf("       LISTA DE PRODUTOS ESPORTIVOS     \n");
-    printf("========================================\n");
+    printf("╔══════════════════════════════════════════════════════╗\n");
+    printf("║              LISTA DE PRODUTOS ESPORTIVOS            ║\n");
+    printf("╚══════════════════════════════════════════════════════╝\n");
 
     for (int i = 0; i < quantidade; i++)
     {
-
         printf("\n");
-        printf("Produto %d\n", i + 1);
-        printf("----------------------------------------\n");
+        printf(" Produto %d\n", i + 1);
+        printf(" ──────────────────────────────────────────────────────\n");
 
-        printf("Codigo:      %d\n", produtos[i].codigo);
-        printf("Nome:        %s\n", produtos[i].nome);
-        printf("Modalidade:  %s\n", produtos[i].modalidade);
-        printf("Marca:       %s\n", produtos[i].marca);
-        printf("Preco:       R$ %.2f\n", produtos[i].preco);
-        printf("Quantidade: %d\n", produtos[i].quantidadeEstoque);
+        printf("   Código ........: %d\n", produtos[i].codigo);
+        printf("   Nome ..........: %s\n", produtos[i].nome);
+        printf("   Modalidade ....: %s\n", produtos[i].modalidade);
+        printf("   Marca .........: %s\n", produtos[i].marca);
+        printf("   Preço .........: R$ %.2f\n", produtos[i].preco);
+        printf("   Quantidade ....: %d un.\n", produtos[i].quantidadeEstoque);
 
-        printf("----------------------------------------\n");
+        printf(" ──────────────────────────────────────────────────────\n");
     }
 
-    printf("\n========================================\n");
-    printf("Total de produtos: %d\n", quantidade);
-    printf("========================================\n");
+    printf("\n══════════════════════════════════════════════════════\n");
+    printf(" Total de produtos: %d\n", quantidade);
+    printf("══════════════════════════════════════════════════════\n");
 }
 
 ProdutoEsportivo *buscarPorCodigo(
@@ -203,23 +201,33 @@ void relatorioPorModalidade(
         printf("Nenhum produto encontrado nessa modalidade.\n");
     }
 }
-
-void ordenarPorPreco(
-    ProdutoEsportivo *produtos[],
-    int quantidade)
+void ordenarPorPreco(ProdutoEsportivo *produtos, int quantidade)
 {
     for (int i = 0; i < quantidade - 1; i++)
     {
         for (int j = i + 1; j < quantidade; j++)
         {
-            if (produtos[i]->preco > produtos[j]->preco)
+            if (produtos[i].preco > produtos[j].preco)
             {
-                ProdutoEsportivo *temp = produtos[i];
-
+                ProdutoEsportivo temp = produtos[i];
                 produtos[i] = produtos[j];
-
                 produtos[j] = temp;
             }
         }
     }
+
+    printf("\n");
+    printf("╔══════════════════════════════════════════════════════╗\n");
+    printf("║              PRODUTOS ORDENADOS POR PREÇO            ║\n");
+    printf("╚══════════════════════════════════════════════════════╝\n\n");
+
+    for (int i = 0; i < quantidade; i++)
+    {
+        printf("   %2d. %-25s R$ %9.2f\n",
+               i + 1,
+               produtos[i].nome,
+               produtos[i].preco);
+    }
+
+    printf("\n──────────────────────────────────────────────────────\n");
 }

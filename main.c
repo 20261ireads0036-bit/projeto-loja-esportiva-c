@@ -7,6 +7,9 @@
 #include <locale.h>
 #include <windows.h>
 
+#define LINHA_DUPLA "══════════════════════════════════════════════════════"
+#define LINHA_SIMPLES "──────────────────────────────────────────────────────"
+
 int main()
 {
     SetConsoleOutputCP(65001);
@@ -22,7 +25,7 @@ int main()
 
     if (produtos == NULL)
     {
-        printf("Erro ao alocar memoria.\n");
+        printf("\n[ERRO] Não foi possível alocar memória.\n\n");
         return 1;
     }
 
@@ -30,43 +33,33 @@ int main()
 
     do
     {
-        system("cls");
-
         printf("\n");
-        printf("============================================================\n");
-        printf("                    VITORIA ESPORTES                        \n");
-        printf("                 Sistema de Estoque                         \n");
-        printf("============================================================\n");
+        printf("╔" LINHA_DUPLA "╗\n");
+        printf("║                  VITÓRIA ESPORTES                    ║\n");
+        printf("║                 Controle de Estoque                  ║\n");
+        printf("╚" LINHA_DUPLA "╝\n");
         printf("\n");
 
-        printf("  [1]  Cadastrar Produto\n");
-        printf("  [2]  Salvar Produtos no Estoque\n");
-        printf("  [3]  Remover Produto\n");
-        printf("  [4]  Listar Todos\n");
-        printf("  [5]  Buscar por Codigo\n");
-        printf("  [6]  Vender Produto\n");
-        printf("  [7]  Reservar para Equipe\n");
-        printf("  [8]  Receber Nova Colecao\n");
-        printf("  [9]  Relatorio por Modalidade\n");
-        printf("  [10] Ordenar por Preco\n");
-        printf("  [0]  Sair\n");
+        printf("   [1]  Cadastrar produto\n");
+        printf("   [2]  Salvar produtos no estoque\n");
+        printf("   [3]  Remover produto\n");
+        printf("   [4]  Listar todos\n");
+        printf("   [5]  Buscar por código\n");
+        printf("   [6]  Vender produto\n");
+        printf("   [7]  Reservar para equipe\n");
+        printf("   [8]  Receber nova coleção\n");
+        printf("   [9]  Relatório por modalidade\n");
+        printf("   [10] Ordenar por preço\n");
+        printf("   [0]  Sair\n");
 
-        printf("\n------------------------------------------------------------\n");
-        printf("Quantidade de produtos cadastrados: %d\n", quantidade);
-        printf("------------------------------------------------------------\n");
-
-        printf("\nEscolha uma opcao: ");
+        printf("\n" LINHA_SIMPLES "\n");
+        printf(" Escolha uma opção: ");
         opcao = lerInteiro();
 
         switch (opcao)
         {
         case 1:
         {
-            printf("\n");
-            printf("============================================================\n");
-            printf("                    CADASTRAR PRODUTO                       \n");
-            printf("============================================================\n\n");
-
             int codigo;
             char nome[50];
             char modalidade[30];
@@ -74,30 +67,34 @@ int main()
             float preco;
             int quantidadeEstoque;
 
-            printf("Codigo: ");
+            printf("\n" LINHA_DUPLA "\n");
+            printf("               CADASTRAR PRODUTO\n");
+            printf(LINHA_DUPLA "\n\n");
+
+            printf(" Código: ");
             codigo = lerInteiro();
 
             while (buscarPorCodigo(produtos, quantidade, codigo) != NULL)
             {
-                printf("\nEsse codigo ja esta cadastrado!\n");
-                printf("Digite um novo codigo: ");
+                printf("\n [!] Esse código já está cadastrado!\n\n");
+                printf(" Digite um novo código: ");
 
                 codigo = lerInteiro();
             }
 
-            printf("Nome: ");
+            printf(" Nome: ");
             scanf(" %49[^\n]", nome);
 
-            printf("Modalidade: ");
+            printf(" Modalidade: ");
             scanf(" %29[^\n]", modalidade);
 
-            printf("Marca: ");
+            printf(" Marca: ");
             scanf(" %29[^\n]", marca);
 
-            printf("Preco: R$ ");
+            printf(" Preço (R$): ");
             preco = lerFloat();
 
-            printf("Quantidade em estoque: ");
+            printf(" Quantidade em estoque: ");
             quantidadeEstoque = lerInteiro();
 
             ProdutoEsportivo *novoProduto =
@@ -111,7 +108,7 @@ int main()
 
             if (novoProduto == NULL)
             {
-                printf("\nErro ao cadastrar produto.\n");
+                printf("\n [ERRO] Falha ao cadastrar o produto.\n\n");
                 break;
             }
 
@@ -120,13 +117,11 @@ int main()
                     &quantidade,
                     *novoProduto))
             {
-                printf("\n------------------------------------------------------------\n");
-                printf("Produto cadastrado com sucesso!\n");
-                printf("------------------------------------------------------------\n");
+                printf("\n [OK] Produto cadastrado com sucesso!\n\n");
             }
             else
             {
-                printf("\nErro ao adicionar produto ao estoque.\n");
+                printf("\n [ERRO] Falha ao adicionar o produto ao estoque.\n\n");
             }
 
             free(novoProduto);
@@ -136,31 +131,25 @@ int main()
 
         case 2:
         {
-            printf("\n");
-            printf("============================================================\n");
-            printf("                 SALVAR PRODUTOS                            \n");
-            printf("============================================================\n\n");
-
             salvarProdutos(
                 produtos,
                 quantidade,
                 "estoque.txt");
 
-            printf("Produtos salvos com sucesso!\n");
+            printf("\n [OK] Produtos salvos com sucesso!\n\n");
 
             break;
         }
 
         case 3:
         {
-            printf("\n");
-            printf("============================================================\n");
-            printf("                  REMOVER PRODUTO                           \n");
-            printf("============================================================\n\n");
-
             int codigo;
 
-            printf("Digite o codigo do produto: ");
+            printf("\n" LINHA_DUPLA "\n");
+            printf("                REMOVER PRODUTO\n");
+            printf(LINHA_DUPLA "\n\n");
+
+            printf(" Código do produto a ser removido: ");
 
             codigo = lerInteiro();
 
@@ -174,13 +163,11 @@ int main()
                     quantidade,
                     "estoque.txt");
 
-                printf("\n------------------------------------------------------------\n");
-                printf("Produto removido com sucesso!\n");
-                printf("------------------------------------------------------------\n");
+                printf("\n [OK] Produto removido com sucesso!\n\n");
             }
             else
             {
-                printf("\nProduto nao encontrado!\n");
+                printf("\n [!] Produto não encontrado!\n\n");
             }
 
             break;
@@ -188,28 +175,25 @@ int main()
 
         case 4:
         {
-            printf("\n");
-            printf("============================================================\n");
-            printf("                    LISTA DE PRODUTOS                       \n");
-            printf("============================================================\n\n");
 
             listarTodos(
                 produtos,
                 quantidade);
+
+            printf("\n");
 
             break;
         }
 
         case 5:
         {
-            printf("\n");
-            printf("============================================================\n");
-            printf("                    BUSCAR PRODUTO                          \n");
-            printf("============================================================\n\n");
-
             int codigo;
 
-            printf("Digite o codigo do produto: ");
+            printf("\n" LINHA_DUPLA "\n");
+            printf("                BUSCAR PRODUTO\n");
+            printf(LINHA_DUPLA "\n\n");
+
+            printf(" Código do produto: ");
 
             codigo = lerInteiro();
 
@@ -221,34 +205,33 @@ int main()
 
             if (produtoEncontrado == NULL)
             {
-                printf("\nProduto nao encontrado!\n");
+                printf("\n [!] Produto não encontrado!\n\n");
                 break;
             }
 
-            printf("\n");
-            printf("---------------- PRODUTO ENCONTRADO -----------------------\n");
-            printf("Codigo:      %d\n", produtoEncontrado->codigo);
-            printf("Nome:        %s\n", produtoEncontrado->nome);
-            printf("Modalidade:  %s\n", produtoEncontrado->modalidade);
-            printf("Marca:       %s\n", produtoEncontrado->marca);
-            printf("Preco:       R$ %.2f\n", produtoEncontrado->preco);
-            printf("Estoque:     %d unidade(s)\n",
-                   produtoEncontrado->quantidadeEstoque);
-            printf("------------------------------------------------------------\n");
+            printf("\n" LINHA_SIMPLES "\n");
+            printf("              PRODUTO ENCONTRADO\n");
+            printf(LINHA_SIMPLES "\n\n");
+            printf("   Código ........: %d\n", produtoEncontrado->codigo);
+            printf("   Nome ..........: %s\n", produtoEncontrado->nome);
+            printf("   Modalidade ....: %s\n", produtoEncontrado->modalidade);
+            printf("   Marca .........: %s\n", produtoEncontrado->marca);
+            printf("   Preço .........: R$ %.2f\n", produtoEncontrado->preco);
+            printf("   Estoque .......: %d un.\n", produtoEncontrado->quantidadeEstoque);
+            printf("\n" LINHA_SIMPLES "\n\n");
 
             break;
         }
 
         case 6:
         {
-            printf("\n");
-            printf("============================================================\n");
-            printf("                     VENDA DE PRODUTO                      \n");
-            printf("============================================================\n\n");
-
             int codigo;
 
-            printf("Digite o codigo do produto: ");
+            printf("\n" LINHA_DUPLA "\n");
+            printf("                     VENDA\n");
+            printf(LINHA_DUPLA "\n\n");
+
+            printf(" Código do produto: ");
             codigo = lerInteiro();
 
             /*
@@ -262,25 +245,27 @@ int main()
 
             if (produtoEncontrado == NULL)
             {
-                printf("\nProduto nao encontrado!\n");
+                printf("\n [!] Produto não encontrado!\n\n");
                 break;
             }
 
-            printf("\n---------------- PRODUTO ENCONTRADO -----------------------\n");
-            printf("Nome:    %s\n", produtoEncontrado->nome);
-            printf("Preco:   R$ %.2f\n", produtoEncontrado->preco);
-            printf("Estoque: %d unidade(s)\n",
+            printf("\n" LINHA_SIMPLES "\n");
+            printf(" Produto encontrado!\n");
+            printf(LINHA_SIMPLES "\n");
+            printf("   Nome ..........: %s\n", produtoEncontrado->nome);
+            printf("   Preço .........: R$ %.2f\n", produtoEncontrado->preco);
+            printf("   Estoque .......: %d un.\n",
                    produtoEncontrado->quantidadeEstoque);
-            printf("------------------------------------------------------------\n");
+            printf(LINHA_SIMPLES "\n\n");
 
             int qtd;
 
-            printf("\nQuantidade para venda: ");
+            printf(" Quantidade para venda: ");
             qtd = lerInteiro();
 
             char atletaFederado;
 
-            printf("Cliente e atleta federado? (S/N): ");
+            printf(" O cliente é atleta federado? (S/N): ");
             scanf(" %c", &atletaFederado);
 
             if (atletaFederado == 'S' ||
@@ -288,7 +273,7 @@ int main()
             {
                 float percentual;
 
-                printf("Percentual de desconto: ");
+                printf(" Percentual de desconto (%%): ");
                 percentual = lerFloat();
 
                 float novoPreco =
@@ -296,8 +281,9 @@ int main()
                         produtoEncontrado,
                         percentual);
 
-                printf("\nPreco com desconto: R$ %.2f\n",
-                       novoPreco);
+                printf(
+                    "\n Preço com desconto: R$ %.2f\n",
+                    novoPreco);
             }
 
             float valor =
@@ -307,17 +293,15 @@ int main()
 
             if (valor == -1)
             {
-                printf("\nEstoque insuficiente!\n");
+                printf("\n [!] Estoque insuficiente!\n\n");
             }
             else
             {
-                printf("\n");
-                printf("------------------------------------------------------------\n");
-                printf("Venda realizada com sucesso!\n");
-                printf("Valor total: R$ %.2f\n", valor);
-                printf("Estoque restante: %d unidade(s)\n",
-                       produtoEncontrado->quantidadeEstoque);
-                printf("------------------------------------------------------------\n");
+                printf("\n" LINHA_SIMPLES "\n");
+                printf(" [OK] Venda realizada com sucesso!\n");
+                printf("      Valor total: R$ %.2f\n",
+                       valor);
+                printf(LINHA_SIMPLES "\n\n");
             }
 
             salvarProdutos(
@@ -330,14 +314,13 @@ int main()
 
         case 7:
         {
-            printf("\n");
-            printf("============================================================\n");
-            printf("                   RESERVA PARA EQUIPE                      \n");
-            printf("============================================================\n\n");
-
             int codigo;
 
-            printf("Digite o codigo do produto: ");
+            printf("\n" LINHA_DUPLA "\n");
+            printf("                    RESERVA\n");
+            printf(LINHA_DUPLA "\n\n");
+
+            printf(" Código do produto: ");
             codigo = lerInteiro();
 
             /*
@@ -351,35 +334,32 @@ int main()
 
             if (produtoEncontrado == NULL)
             {
-                printf("\nProduto nao encontrado!\n");
+                printf("\n [!] Produto não encontrado!\n\n");
                 break;
             }
 
-            printf("\n---------------- PRODUTO ENCONTRADO -----------------------\n");
-            printf("Nome:    %s\n", produtoEncontrado->nome);
-            printf("Estoque: %d unidade(s)\n",
+            printf("\n" LINHA_SIMPLES "\n");
+            printf(" Produto encontrado!\n");
+            printf(LINHA_SIMPLES "\n");
+            printf("   Nome ..........: %s\n", produtoEncontrado->nome);
+            printf("   Estoque .......: %d un.\n",
                    produtoEncontrado->quantidadeEstoque);
-            printf("------------------------------------------------------------\n");
+            printf(LINHA_SIMPLES "\n\n");
 
             int qtd;
 
-            printf("\nQuantidade para reserva: ");
+            printf(" Quantidade para reserva: ");
             qtd = lerInteiro();
 
             if (reservarParaEquipe(
                     produtoEncontrado,
                     qtd))
             {
-                printf("\n");
-                printf("------------------------------------------------------------\n");
-                printf("Reserva realizada com sucesso!\n");
-                printf("Estoque restante: %d unidade(s)\n",
-                       produtoEncontrado->quantidadeEstoque);
-                printf("------------------------------------------------------------\n");
+                printf("\n [OK] Reserva realizada com sucesso!\n\n");
             }
             else
             {
-                printf("\nEstoque insuficiente!\n");
+                printf("\n [!] Estoque insuficiente!\n\n");
             }
 
             salvarProdutos(
@@ -392,14 +372,13 @@ int main()
 
         case 8:
         {
-            printf("\n");
-            printf("============================================================\n");
-            printf("                   NOVA COLECAO                             \n");
-            printf("============================================================\n\n");
-
             int codigo;
 
-            printf("Digite o codigo do produto: ");
+            printf("\n" LINHA_DUPLA "\n");
+            printf("                 NOVA COLEÇÃO\n");
+            printf(LINHA_DUPLA "\n\n");
+
+            printf(" Código do produto: ");
             codigo = lerInteiro();
 
             ProdutoEsportivo *produtoEncontrado =
@@ -410,24 +389,26 @@ int main()
 
             if (produtoEncontrado == NULL)
             {
-                printf("\nProduto nao encontrado!\n");
+                printf("\n [!] Produto não encontrado!\n\n");
                 break;
             }
 
-            printf("\n---------------- PRODUTO ENCONTRADO -----------------------\n");
-            printf("Nome:         %s\n", produtoEncontrado->nome);
-            printf("Preco atual:  R$ %.2f\n", produtoEncontrado->preco);
-            printf("Estoque atual: %d unidade(s)\n",
+            printf("\n" LINHA_SIMPLES "\n");
+            printf(" Produto encontrado!\n");
+            printf(LINHA_SIMPLES "\n");
+            printf("   Nome ..........: %s\n", produtoEncontrado->nome);
+            printf("   Preço atual ...: R$ %.2f\n", produtoEncontrado->preco);
+            printf("   Estoque atual .: %d un.\n",
                    produtoEncontrado->quantidadeEstoque);
-            printf("------------------------------------------------------------\n");
+            printf(LINHA_SIMPLES "\n\n");
 
             int quantidadeRecebida;
             float novoPreco;
 
-            printf("\nQuantidade recebida: ");
+            printf(" Quantidade recebida: ");
             quantidadeRecebida = lerInteiro();
 
-            printf("Novo preco: R$ ");
+            printf(" Novo preço (R$): ");
             novoPreco = lerFloat();
 
             receberNovaColecao(
@@ -435,14 +416,13 @@ int main()
                 quantidadeRecebida,
                 novoPreco);
 
-            printf("\n");
-            printf("------------------------------------------------------------\n");
-            printf("Nova colecao registrada com sucesso!\n");
-            printf("Novo estoque: %d unidade(s)\n",
+            printf("\n" LINHA_SIMPLES "\n");
+            printf(" [OK] Nova coleção registrada com sucesso!\n");
+            printf("      Novo estoque: %d un.\n",
                    produtoEncontrado->quantidadeEstoque);
-            printf("Novo preco:   R$ %.2f\n",
+            printf("      Novo preço..: R$ %.2f\n",
                    produtoEncontrado->preco);
-            printf("------------------------------------------------------------\n");
+            printf(LINHA_SIMPLES "\n\n");
 
             salvarProdutos(
                 produtos,
@@ -451,64 +431,54 @@ int main()
 
             break;
         }
-
         case 9:
         {
-            printf("\n");
-            printf("============================================================\n");
-            printf("                RELATORIO POR MODALIDADE                    \n");
-            printf("============================================================\n\n");
-
             char modalidade[30];
 
-            printf("Digite a modalidade: ");
+            printf("\n" LINHA_DUPLA "\n");
+            printf("            RELATÓRIO POR MODALIDADE\n");
+            printf(LINHA_DUPLA "\n\n");
+
+            printf(" Modalidade: ");
             scanf(" %29[^\n]", modalidade);
+
+            printf("\n");
 
             relatorioPorModalidade(
                 produtos,
                 quantidade,
                 modalidade);
 
+            printf("\n");
+
             break;
         }
-
         case 10:
         {
-            printf("\n");
-            printf("============================================================\n");
-            printf("                 ORDENAR POR PRECO                          \n");
-            printf("============================================================\n\n");
+
+            printf("\n [OK] Produtos ordenados por preço!\n");
 
             ordenarPorPreco(
                 produtos,
                 quantidade);
 
-            printf("Produtos ordenados do menor para o maior preco!\n\n");
-
-            listarTodos(
-                produtos,
-                quantidade);
+            printf("\n");
 
             break;
         }
 
         case 0:
         {
-            printf("\n");
-            printf("============================================================\n");
-            printf("                 ENCERRANDO SISTEMA                         \n");
-            printf("============================================================\n");
-            printf("\nSaindo do sistema...\n");
+            printf("\n" LINHA_SIMPLES "\n");
+            printf("   Saindo do sistema... Até logo!\n");
+            printf(LINHA_SIMPLES "\n\n");
 
             break;
         }
 
         default:
         {
-            printf("\n");
-            printf("------------------------------------------------------------\n");
-            printf("Opcao invalida! Escolha uma opcao do menu.\n");
-            printf("------------------------------------------------------------\n");
+            printf("\n [!] Opção inválida! Tente novamente.\n\n");
 
             break;
         }

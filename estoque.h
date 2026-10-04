@@ -19,7 +19,7 @@ void liberarProdutos(ProdutoEsportivo **produtos, int *quantidade);
 
 void relatorioPorModalidade(ProdutoEsportivo produtos[], int quantidade, char *modalidade);
 
-void ordenarPorPreco(ProdutoEsportivo *produtos[], int quantidade);
+void ordenarPorPreco(ProdutoEsportivo produtos[], int quantidade);
 
 void receberNovaColecao(ProdutoEsportivo *produto, int quantidadeRecebida, float novoPreco);
 
