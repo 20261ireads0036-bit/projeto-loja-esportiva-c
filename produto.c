@@ -1,99 +1,68 @@
 #include "produto.h"
 
-ProdutoEsportivo *cadastrarProdutoEsportivo(int codigo, char nome[50],
-                                            char modalidade[30], char marca[30],
-                                            float preco) {
-  ProdutoEsportivo *produto = malloc(sizeof(ProdutoEsportivo));
+ProdutoEsportivo *cadastrarProdutoEsportivo(int codigo, char nome[50], char modalidade[30], char marca[30], float preco, int quantidadeEstoque)
+{
+    ProdutoEsportivo *produto = malloc(sizeof(ProdutoEsportivo));
 
-  produto->codigo = codigo;
-  strcpy(produto->nome, nome);
-  strcpy(produto->modalidade, modalidade);
-  strcpy(produto->marca, marca);
-  produto->preco = preco;
-
-  return produto;
-}
-
-int adicionarAoVetor(ProdutoEsportivo **produtos, int *quantidade,
-                     ProdutoEsportivo *novoProduto) {
-  ProdutoEsportivo *temp;
-
-  temp = realloc(*produtos, (*quantidade + 1) * sizeof(ProdutoEsportivo));
-
-  if (temp == NULL) {
-    return 0;
-  }
-
-  *produtos = temp;
-
-  (*produtos)[*quantidade] = *novoProduto;
-
-  (*quantidade)++;
-
-  return 1;
-}
-
-void listarTodos(ProdutoEsportivo *produtos[], int *quantidade) {
-
-  printf("\n");
-  printf("========================================\n");
-  printf("       LISTA DE PRODUTOS ESPORTIVOS     \n");
-  printf("========================================\n");
-
-  for (int i = 0; i < *quantidade; i++) {
-
-    printf("\n");
-    printf("Produto %d\n", i + 1);
-    printf("----------------------------------------\n");
-
-    printf("Codigo:      %d\n", produtos[i]->codigo);
-    printf("Nome:        %s\n", produtos[i]->nome);
-    printf("Modalidade:  %s\n", produtos[i]->modalidade);
-    printf("Marca:       %s\n", produtos[i]->marca);
-    printf("Preco:       R$ %.2f\n", produtos[i]->preco);
-
-    printf("----------------------------------------\n");
-  }
-
-  printf("\n========================================\n");
-  printf("Total de produtos: %d\n", *quantidade);
-  printf("========================================\n");
-}
-
-ProdutoEsportivo *buscarPorCodigo(ProdutoEsportivo *produtos[], int *quantidade,
-                                  int *codigoBuscado) {
-
-  for (int i = 0; i < *quantidade; i++) {
-
-    if (produtos[i]->codigo == *codigoBuscado) {
-
-      printf("\n");
-      printf("========================================\n");
-      printf("          PRODUTO ENCONTRADO            \n");
-      printf("========================================\n");
-
-      printf("Codigo:      %d\n", produtos[i]->codigo);
-      printf("Nome:        %s\n", produtos[i]->nome);
-      printf("Modalidade:  %s\n", produtos[i]->modalidade);
-      printf("Marca:       %s\n", produtos[i]->marca);
-      printf("Preco:       R$ %.2f\n", produtos[i]->preco);
-
-      printf("========================================\n");
-
-      return produtos[i];
+    if (produto == NULL)
+    {
+        return NULL;
     }
-  }
 
-  printf("\n");
-  printf("========================================\n");
-  printf("          PRODUTO NAO ENCONTRADO        \n");
-  printf("========================================\n");
-  printf("Nenhum produto possui o codigo %d.\n", *codigoBuscado);
-  printf("========================================\n");
+    produto->codigo = codigo;
 
-  return NULL;
+    strcpy(produto->nome, nome);
+
+    strcpy(produto->modalidade, modalidade);
+
+    strcpy(produto->marca, marca);
+
+    produto->preco = preco;
+
+    produto->quantidadeEstoque = quantidadeEstoque;
+
+    return produto;
 }
 
-void atualizarQuantidadeEstoque(ProdutoEsportivo *item, int novo_valor) {
-  item->quantidadeEstoque = novo_valor;
+void atualizarQuantidadeEstoque(ProdutoEsportivo *item, int novo_valor)
+{
+    item->quantidadeEstoque = novo_valor;
+}
+
+int venderProdutoEsportivo(ProdutoEsportivo *produto, int quantidade)
+{
+    if (produto->quantidadeEstoque >= quantidade)
+    {
+        produto->quantidadeEstoque -= quantidade;
+
+        return produto->preco * quantidade;
+    }
+    else
+    {
+        return -1;
+    }
+}
+
+int reservarParaEquipe(ProdutoEsportivo *produto, int quantidade)
+{
+    if (produto->quantidadeEstoque >= quantidade)
+    {
+        produto->quantidadeEstoque -= quantidade;
+
+        return 1;
+    }
+
+    return 0;
+}
+
+float aplicarDescontoAtletaFederado(
+    ProdutoEsportivo *produto,
+    float percentual
+)
+{
+    produto->preco =
+        produto->preco -
+        (produto->preco * percentual / 100);
+
+    return produto->preco;
 }
