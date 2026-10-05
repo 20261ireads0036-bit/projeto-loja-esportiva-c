@@ -20,15 +20,26 @@ int lerInteiro()
 float lerFloat()
 {
     float valor;
+    char entrada[100];
+    char extra;
 
-    while (scanf("%f", &valor) != 1)
+    while (1)
     {
-        printf("Entrada invalida! Digite um numero: ");
+        if (fgets(entrada, sizeof(entrada), stdin) == NULL)
+        {
+            printf("Erro ao ler entrada.\n");
+            continue;
+        }
 
-        while (getchar() != '\n');
+        if (sscanf(entrada, "%f %c", &valor, &extra) == 1)
+        {
+            return valor;
+        }
+
+        printf("Entrada invalida! Digite apenas um numero: ");
     }
+}
 
+void limparBuffer(){
     while (getchar() != '\n');
-
-    return valor;
 }

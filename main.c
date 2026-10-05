@@ -84,12 +84,15 @@ int main()
 
             printf(" Nome: ");
             scanf(" %49[^\n]", nome);
+            limparBuffer();
 
             printf(" Modalidade: ");
             scanf(" %29[^\n]", modalidade);
+            limparBuffer();
 
             printf(" Marca: ");
             scanf(" %29[^\n]", marca);
+            limparBuffer();
 
             printf(" Preço (R$): ");
             preco = lerFloat();
@@ -255,10 +258,31 @@ int main()
             printf(" Quantidade para venda: ");
             qtd = lerInteiro();
 
+            while (qtd <= 0)
+            {
+                printf(" [!] A quantidade deve ser maior que zero.\n");
+                printf(" Digite novamente: ");
+                qtd = lerInteiro();
+            }
+
             char atletaFederado;
 
             printf(" O cliente é atleta federado? (S/N): ");
             scanf(" %c", &atletaFederado);
+            limparBuffer();
+
+            while (atletaFederado != 'S' &&
+                   atletaFederado != 's' &&
+                   atletaFederado != 'N' &&
+                   atletaFederado != 'n')
+            {
+                printf(" [!] Opção inválida! Digite S ou N.\n");
+                printf(" O cliente é atleta federado? (S/N): ");
+                scanf(" %c", &atletaFederado);
+                limparBuffer();
+            }
+
+            float precoUnitario = produtoEncontrado->preco;
 
             if (atletaFederado == 'S' ||
                 atletaFederado == 's')
@@ -268,33 +292,36 @@ int main()
                 printf(" Percentual de desconto (%%): ");
                 percentual = lerFloat();
 
-                float novoPreco =
+                while (percentual < 0 || percentual > 100)
+                {
+                    printf(" [!] O desconto deve estar entre 0%% e 100%%.\n");
+                    printf(" Digite novamente: ");
+                    percentual = lerFloat();
+                }
+
+                precoUnitario =
                     aplicarDescontoAtletaFederado(
                         produtoEncontrado,
                         percentual);
 
-                printf(
-                    "\n Preço com desconto: R$ %.2f\n",
-                    novoPreco);
+                printf("\n Preço com desconto: R$ %.2f\n",
+                       precoUnitario);
             }
 
-            float valor =
-                venderProdutoEsportivo(
-                    produtoEncontrado,
-                    qtd);
-
-            if (valor == -1)
+            if (qtd > produtoEncontrado->quantidadeEstoque)
             {
                 printf("\n [!] Estoque insuficiente!\n\n");
+                break;
             }
-            else
-            {
-                printf("\n" LINHA_SIMPLES "\n");
-                printf(" [OK] Venda realizada com sucesso!\n");
-                printf("      Valor total: R$ %.2f\n",
-                       valor);
-                printf(LINHA_SIMPLES "\n\n");
-            }
+
+            produtoEncontrado->quantidadeEstoque -= qtd;
+
+            float valor = precoUnitario * qtd;
+
+            printf("\n" LINHA_SIMPLES "\n");
+            printf(" [OK] Venda realizada com sucesso!\n");
+            printf("      Valor total: R$ %.2f\n", valor);
+            printf(LINHA_SIMPLES "\n\n");
 
             salvarProdutos(
                 produtos,
@@ -315,9 +342,6 @@ int main()
             printf(" Código do produto: ");
             codigo = lerInteiro();
 
-            /*
-             * Procura o produto pelo codigo.
-             */
             ProdutoEsportivo *produtoEncontrado =
                 buscarPorCodigo(
                     produtos,
@@ -480,7 +504,6 @@ int main()
             break;
         }
         }
-
     } while (opcao != 0);
 
     salvarProdutos(

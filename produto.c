@@ -60,11 +60,13 @@ float aplicarDescontoAtletaFederado(
     ProdutoEsportivo *produto,
     float percentual)
 {
-    produto->preco =
+    float precoComDesconto;
+
+      precoComDesconto =
         produto->preco -
         (produto->preco * percentual / 100);
 
-    return produto->preco;
+    return precoComDesconto;
 }
 
 void listarProdutosPorFaixaPreco(ProdutoEsportivo produtos[], int quantidade)

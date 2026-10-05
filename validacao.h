@@ -3,5 +3,6 @@
 
 int lerInteiro();
 float lerFloat();
+void limparBuffer();
 
 #endif
