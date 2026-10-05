@@ -29,7 +29,7 @@ int main()
         return 1;
     }
 
-    quantidade = carregarProdutos(produtos, "estoque.txt");
+    quantidade = carregarProdutos(produtos, "estoque_esportivo.txt");
 
     do
     {
@@ -125,7 +125,7 @@ int main()
                 salvarProdutos(
                     produtos,
                     quantidade,
-                    "estoque.txt");
+                    "estoque_esportivo.txt");
 
                 break;
             }
@@ -159,7 +159,7 @@ int main()
                 salvarProdutos(
                     produtos,
                     quantidade,
-                    "estoque.txt");
+                    "estoque_esportivo.txt");
 
                 printf("\n [OK] Produto removido com sucesso!\n\n");
             }
@@ -326,7 +326,7 @@ int main()
             salvarProdutos(
                 produtos,
                 quantidade,
-                "estoque.txt");
+                "estoque_esportivo.txt");
 
             break;
         }
@@ -381,7 +381,7 @@ int main()
             salvarProdutos(
                 produtos,
                 quantidade,
-                "estoque.txt");
+                "estoque_esportivo.txt");
 
             break;
         }
@@ -443,7 +443,7 @@ int main()
             salvarProdutos(
                 produtos,
                 quantidade,
-                "estoque.txt");
+                "estoque_esportivo.txt");
 
             break;
         }
@@ -509,7 +509,7 @@ int main()
     salvarProdutos(
         produtos,
         quantidade,
-        "estoque.txt");
+        "estoque_esportivo.txt");
 
     liberarProdutos(
         &produtos,
