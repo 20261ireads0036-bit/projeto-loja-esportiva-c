@@ -28,4 +28,6 @@ int venderProdutoEsportivo(ProdutoEsportivo *produto, int quantidade);
 
 float aplicarDescontoAtletaFederado(ProdutoEsportivo *produto, float percentual);
 
+void listarProdutosPorFaixaPreco (ProdutoEsportivo produtos[], int quantidade);
+
 #endif

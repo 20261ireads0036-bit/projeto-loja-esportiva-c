@@ -41,15 +41,15 @@ int main()
         printf("\n");
 
         printf("   [1]  Cadastrar produto\n");
-        printf("   [2]  Salvar produtos no estoque\n");
-        printf("   [3]  Remover produto\n");
-        printf("   [4]  Listar todos\n");
-        printf("   [5]  Buscar por código\n");
-        printf("   [6]  Vender produto\n");
-        printf("   [7]  Reservar para equipe\n");
-        printf("   [8]  Receber nova coleção\n");
-        printf("   [9]  Relatório por modalidade\n");
-        printf("   [10] Ordenar por preço\n");
+        printf("   [2]  Remover produto\n");
+        printf("   [3]  Listar todos\n");
+        printf("   [4]  Buscar por código\n");
+        printf("   [5]  Vender produto\n");
+        printf("   [6]  Reservar para equipe\n");
+        printf("   [7]  Receber nova coleção\n");
+        printf("   [8]  Relatório por modalidade\n");
+        printf("   [9] Ordenar por preço\n");
+        printf("   [10] Buscar por faixa de preço\n");
         printf("   [0]  Sair\n");
 
         printf("\n" LINHA_SIMPLES "\n");
@@ -118,6 +118,13 @@ int main()
                     *novoProduto))
             {
                 printf("\n [OK] Produto cadastrado com sucesso!\n\n");
+
+                salvarProdutos(
+                    produtos,
+                    quantidade,
+                    "estoque.txt");
+
+                break;
             }
             else
             {
@@ -130,18 +137,6 @@ int main()
         }
 
         case 2:
-        {
-            salvarProdutos(
-                produtos,
-                quantidade,
-                "estoque.txt");
-
-            printf("\n [OK] Produtos salvos com sucesso!\n\n");
-
-            break;
-        }
-
-        case 3:
         {
             int codigo;
 
@@ -173,7 +168,7 @@ int main()
             break;
         }
 
-        case 4:
+        case 3:
         {
 
             listarTodos(
@@ -185,7 +180,7 @@ int main()
             break;
         }
 
-        case 5:
+        case 4:
         {
             int codigo;
 
@@ -223,7 +218,7 @@ int main()
             break;
         }
 
-        case 6:
+        case 5:
         {
             int codigo;
 
@@ -234,9 +229,6 @@ int main()
             printf(" Código do produto: ");
             codigo = lerInteiro();
 
-            /*
-             * Procura o produto pelo codigo.
-             */
             ProdutoEsportivo *produtoEncontrado =
                 buscarPorCodigo(
                     produtos,
@@ -312,7 +304,7 @@ int main()
             break;
         }
 
-        case 7:
+        case 6:
         {
             int codigo;
 
@@ -370,7 +362,7 @@ int main()
             break;
         }
 
-        case 8:
+        case 7:
         {
             int codigo;
 
@@ -431,7 +423,7 @@ int main()
 
             break;
         }
-        case 9:
+        case 8:
         {
             char modalidade[30];
 
@@ -453,7 +445,7 @@ int main()
 
             break;
         }
-        case 10:
+        case 9:
         {
 
             printf("\n [OK] Produtos ordenados por preço!\n");
@@ -464,6 +456,11 @@ int main()
 
             printf("\n");
 
+            break;
+        }
+        case 10:
+        {
+            listarProdutosPorFaixaPreco(produtos, quantidade);
             break;
         }
 

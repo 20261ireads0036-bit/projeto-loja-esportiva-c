@@ -12,6 +12,8 @@ int lerInteiro()
         while (getchar() != '\n');
     }
 
+    while (getchar() != '\n');
+
     return valor;
 }
 
@@ -25,6 +27,8 @@ float lerFloat()
 
         while (getchar() != '\n');
     }
+
+    while (getchar() != '\n');
 
     return valor;
 }
