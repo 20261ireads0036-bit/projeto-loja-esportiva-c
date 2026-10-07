@@ -4,5 +4,6 @@
 int lerInteiro();
 float lerFloat();
 void limparBuffer();
+void lerTextoSemNumeros(const char *mensagem, char *texto, int tamanho);
 
 #endif
