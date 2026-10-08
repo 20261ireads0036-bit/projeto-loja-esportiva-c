@@ -203,7 +203,8 @@ void relatorioPorModalidade(
 
     for (int i = 0; i < quantidade; i++)
     {
-        if (strcmp(produtos[i].modalidade, modalidade) == 0)
+        // Compara ignorando letras maiúsculas e minúsculas.
+        if (_stricmp(produtos[i].modalidade, modalidade) == 0)
         {
             printf("Codigo: %d\n", produtos[i].codigo);
             printf("Nome: %s\n", produtos[i].nome);
